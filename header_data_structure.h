@@ -109,7 +109,7 @@ private:
 		std::stack<std::string> bucket;
 		Bucket* last;
 		Bucket* next;
-		Bucket(int freq, std::string str) : freq(freq)
+		Bucket(int freq, std::string str) : freq(freq),last(NULL),next(NULL)
 		{
 			bucket.push(str);
 		}
@@ -122,7 +122,7 @@ private:
 	void insert(Bucket* bucket1,Bucket* bucket2);
 	void remove(Bucket* bucket);
 public:
-	FreqString() {};
+	FreqString();
 	void inc(std::string str);
 	void dec(std::string str);
 	std::string getMaxfreq();

@@ -344,6 +344,7 @@ void FreqString::insert(Bucket* bucket1, Bucket* bucket2)
 
 void FreqString::remove(Bucket* bucket)
 {
+	if (bucket == Llimit || bucket == Rlimit) return;
 	Bucket* left = bucket->last;
 	Bucket* right = bucket->next;
 	left->next = right;
@@ -385,4 +386,63 @@ void FreqString::inc(std::string str)
 		}
 			map[str] = temp->next;
 	}
+}
+
+void FreqString::dec(std::string str)
+{
+	Bucket* temp = map[str];
+	std::string str1;
+	std::stack<std::string> stack;
+	while (temp->bucket.empty())
+	{
+		if (temp->bucket.top() != str)
+		{
+			stack.push(temp->bucket.top());
+			temp->bucket.pop();
+		}
+		else
+		{
+			temp->bucket.pop();
+			break;
+		}
+	}
+
+	//recover
+	while (!stack.empty())
+	{
+		temp->bucket.push(stack.top());
+		stack.pop();
+	}
+
+	if (temp->last->freq != temp->freq - 1)
+	{
+		insert(temp->last, new Bucket(temp->freq - 1, str));
+	}
+	else if (temp->last->freq = 0) return;
+	else temp->last->bucket.push(str);
+}
+
+std::string FreqString::getMaxfreq()
+{
+	Bucket* temp = Rlimit->last;
+	if (temp = Llimit) 
+	{
+		std::cout << "error,the container is empty \n";
+		return "";
+	}
+	std::string ans = temp->bucket.top();
+	return ans;
+}
+
+std::string FreqString::getMinfreq()
+{
+	Bucket* temp = Llimit->next;
+	if (temp == Rlimit)
+	{
+		std::cout << "error,the container is empty \n";
+		return "";
+	}
+	
+	std::string ans = temp->bucket.top();
+	return ans;
 }

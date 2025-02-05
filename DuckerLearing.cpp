@@ -11,20 +11,20 @@ std::unordered_set<Inode*> set;
 
 int main()
 {
-	int arr[] = { 1,1,1,3,3,2,5 };
-	//result is 1,3,1,5,2,3,1
-	int n = sizeof(arr) / sizeof(arr[0]);
+	FreqString fs;
+	vector<string> v;
+	v = {"hello", "world", "this", "is", "a", "test", "hello",
+		"world","this","is","a","test","hello",
+		"world","this","is","a","test"};
 
-	MaxFrequentStack maxFreqStack;
-	for (int i = 0; i < n; i++)
+	for (auto s : v)
 	{
-		maxFreqStack.push(arr[i]);
+		fs.inc(s);
 	}
 
-	for (int i = 0; i < n; i++)
-	{
-		cout << maxFreqStack.getMax() << " ";
-	}
+	
+	cout << fs.getMaxfreq() << endl;
+	cout << fs.getMinfreq() << endl;
 
 	return 0;
 }
