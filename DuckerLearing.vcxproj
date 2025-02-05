@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="classical_recursion.cpp" />
     <ClCompile Include="dateStructure.cpp" />
     <ClCompile Include="DuckerLearing.cpp" />
     <ClCompile Include="ListDefinition.cpp" />
@@ -134,6 +135,7 @@
     <ClCompile Include="TreeDefinition.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="classical_recursion.h" />
     <ClInclude Include="header_data_structure.h" />
     <ClInclude Include="header_list.h" />
     <ClInclude Include="header_solution.h" />

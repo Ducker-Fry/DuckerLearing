@@ -30,6 +30,9 @@
     <ClCompile Include="solution.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="classical_recursion.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="header_list.h">
@@ -42,6 +45,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="header_solution.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="classical_recursion.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

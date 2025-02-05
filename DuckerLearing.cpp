@@ -3,6 +3,7 @@
 #include"header_tree.h"
 #include"header_data_structure.h"
 #include"header_solution.h"
+#include"classical_recursion.h"
 
 using namespace std;
 random_device rd;
@@ -11,20 +12,12 @@ std::unordered_set<Inode*> set;
 
 int main()
 {
-	FreqString fs;
-	vector<string> v;
-	v = {"hello", "world", "this", "is", "a", "test", "hello",
-		"world","this","is","test","hello",
-		"world","this","is","test"};
-
-	for (auto s : v)
-	{
-		fs.inc(s);
-	}
-	
-
-	cout << fs.getMaxfreq() << endl;
-	cout << fs.getMinfreq() << endl;
-
+	int arr[] = { 2,2,4,4,6,6};
+	int n = sizeof(arr) / sizeof(int);
+	ArraySet arrayset(arr, n);
+	arrayset.printItself1();
+	cout << endl;
+	arrayset.printItself2();
 	return 0;
+	
 }
