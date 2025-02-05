@@ -16,6 +16,8 @@ int main()
 	int n = sizeof(arr) / sizeof(int);
 	ArraySet arrayset(arr, n);
 	arrayset.printItself1();
+
+
 	cout << endl;
 	arrayset.printItself2();
 	return 0;
