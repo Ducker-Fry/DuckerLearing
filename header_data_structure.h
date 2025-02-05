@@ -106,12 +106,12 @@ private:
 	{
 	public:
 		int freq;
-		std::stack<std::string> bucket;
+		std::unordered_set<std::string> bucket;
 		Bucket* last;
 		Bucket* next;
 		Bucket(int freq, std::string str) : freq(freq),last(NULL),next(NULL)
 		{
-			bucket.push(str);
+			bucket.insert(str);
 		}
 	};
 
@@ -123,8 +123,9 @@ private:
 	void remove(Bucket* bucket);
 public:
 	FreqString();
-	void inc(std::string str);
-	void dec(std::string str);
+	~FreqString();
+	void inc(const std::string& str);
+	void dec(const std::string& str);
 	std::string getMaxfreq();
 	std::string getMinfreq();
 };

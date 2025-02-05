@@ -332,19 +332,26 @@ int MaxFrequentStack::getMax()
 
 
 //class FreqString 
+
 void FreqString::insert(Bucket* bucket1, Bucket* bucket2)
 {
-	//在bucket1后面插入一个桶bucket2
+	// 在 bucket1 后面插入一个桶 bucket2
 	Bucket* temp = bucket1->next;
 	bucket1->next = bucket2;
 	bucket2->next = temp;
-	temp->last = bucket2;
+	if (temp != nullptr)
+	{
+		temp->last = bucket2;
+	}
 	bucket2->last = bucket1;
 }
 
 void FreqString::remove(Bucket* bucket)
 {
-	if (bucket == Llimit || bucket == Rlimit) return;
+	if (bucket == Llimit || bucket == Rlimit)
+	{
+		return; // 不删除边界哨兵节点
+	}
 	Bucket* left = bucket->last;
 	Bucket* right = bucket->next;
 	left->next = right;
@@ -356,81 +363,108 @@ FreqString::FreqString()
 {
 	Llimit = new Bucket(0, "");
 	Rlimit = new Bucket(std::numeric_limits<int>::max(), "");
+	Llimit->next = Rlimit;
+	Rlimit->last = Llimit;
 }
 
-void FreqString::inc(std::string str)
+FreqString::~FreqString()
+{
+	Bucket* current = Llimit->next;
+	while (current != Rlimit)
+	{
+		Bucket* next = current->next;
+		delete current;
+		current = next;
+	}
+	delete Llimit;
+	delete Rlimit;
+}
+
+void FreqString::inc(const std::string& str)
 {
 	if (map.find(str) == map.end())
 	{
-		Bucket* temp = Llimit->last;
+		Bucket* temp = Llimit->next;
 		if (temp->freq != 1)
 		{
 			insert(Llimit, new Bucket(1, str));
+			map[str] = Llimit->next;
 		}
 		else
 		{
-			temp->bucket.push(str);
+			temp->bucket.insert(str);
+			map[str] = temp;
 		}
-		map[str] = Llimit->next;
 	}
 	else
 	{
 		Bucket* temp = map[str];
-		if (temp->next->freq != temp->freq + 1)
+		Bucket* nextBucket = temp->next;
+		if (nextBucket == Rlimit || nextBucket->freq != temp->freq + 1)
 		{
 			insert(temp, new Bucket(temp->freq + 1, str));
+			map[str] = temp->next;
 		}
 		else
 		{
-			temp->next->bucket.push(str);
+			nextBucket->bucket.insert(str);
+			map[str] = nextBucket;
 		}
-			map[str] = temp->next;
+		temp->bucket.erase(str);
+		if (temp->bucket.empty())
+		{
+			remove(temp);
+		}
 	}
 }
 
-void FreqString::dec(std::string str)
+void FreqString::dec(const std::string& str)
 {
-	Bucket* temp = map[str];
-	std::string str1;
-	std::stack<std::string> stack;
-	while (temp->bucket.empty())
+	if (map.find(str) == map.end())
 	{
-		if (temp->bucket.top() != str)
+		return; // 如果字符串不存在，直接返回
+	}
+
+	Bucket* temp = map[str];
+	if (temp->freq == 1)
+	{
+		map.erase(str);
+		temp->bucket.erase(str);
+		if (temp->bucket.empty())
 		{
-			stack.push(temp->bucket.top());
-			temp->bucket.pop();
+			remove(temp);
+		}
+	}
+	else
+	{
+		Bucket* prevBucket = temp->last;
+		if (prevBucket == Llimit || prevBucket->freq != temp->freq - 1)
+		{
+			insert(prevBucket, new Bucket(temp->freq - 1, str));
+			map[str] = prevBucket->next;
 		}
 		else
 		{
-			temp->bucket.pop();
-			break;
+			prevBucket->bucket.insert(str);
+			map[str] = prevBucket;
+		}
+		temp->bucket.erase(str);
+		if (temp->bucket.empty())
+		{
+			remove(temp);
 		}
 	}
-
-	//recover
-	while (!stack.empty())
-	{
-		temp->bucket.push(stack.top());
-		stack.pop();
-	}
-
-	if (temp->last->freq != temp->freq - 1)
-	{
-		insert(temp->last, new Bucket(temp->freq - 1, str));
-	}
-	else if (temp->last->freq = 0) return;
-	else temp->last->bucket.push(str);
 }
 
 std::string FreqString::getMaxfreq()
 {
 	Bucket* temp = Rlimit->last;
-	if (temp = Llimit) 
+	if (temp == Llimit)
 	{
-		std::cout << "error,the container is empty \n";
+		std::cout << "error, the container is empty \n";
 		return "";
 	}
-	std::string ans = temp->bucket.top();
+	std::string ans = *temp->bucket.begin();
 	return ans;
 }
 
@@ -439,10 +473,9 @@ std::string FreqString::getMinfreq()
 	Bucket* temp = Llimit->next;
 	if (temp == Rlimit)
 	{
-		std::cout << "error,the container is empty \n";
+		std::cout << "error, the container is empty \n";
 		return "";
 	}
-	
-	std::string ans = temp->bucket.top();
+	std::string ans = *temp->bucket.begin();
 	return ans;
 }

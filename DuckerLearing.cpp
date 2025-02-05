@@ -14,15 +14,15 @@ int main()
 	FreqString fs;
 	vector<string> v;
 	v = {"hello", "world", "this", "is", "a", "test", "hello",
-		"world","this","is","a","test","hello",
-		"world","this","is","a","test"};
+		"world","this","is","test","hello",
+		"world","this","is","test"};
 
 	for (auto s : v)
 	{
 		fs.inc(s);
 	}
-
 	
+
 	cout << fs.getMaxfreq() << endl;
 	cout << fs.getMinfreq() << endl;
 
