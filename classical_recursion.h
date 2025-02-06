@@ -23,3 +23,19 @@ private:
 	void recursion2(int index, std::vector<int> path);
 };
 
+class FullArrangement
+{
+public:
+	FullArrangement(int* input,int size);
+	~FullArrangement();
+	void printItself1();
+
+private:
+	int* mark;
+	int size;
+	std::vector<int> arr;
+	std::vector<int> temp;
+	std::vector<std::vector<int>> ans;
+	void recursion1(int index, int* mark);
+};
+

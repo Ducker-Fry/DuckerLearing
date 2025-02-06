@@ -12,15 +12,13 @@ std::unordered_set<Inode*> set;
 
 int main()
 {
-	int arr[] = { 2,2,4,4,6,6};
+	int arr[] = {1,2,3,4};
 	int n = sizeof(arr) / sizeof(int);
-	ArraySet arrayset(arr, n);
-	arrayset.printItself1();
-
-
+	
+	FullArrangement fullarrangement(arr, n);
+	fullarrangement.printItself1();
 	cout << endl;
 
-	arrayset.printItself2();
 	return 0;
 	
 }

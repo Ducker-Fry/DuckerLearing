@@ -78,3 +78,57 @@ void ArraySet::printItself2()
 		std::cout << std::endl;
 	}
 }
+
+
+
+//class FullArrangement
+
+FullArrangement::FullArrangement(int* input, int size)
+{
+	this->size = size;
+	temp.resize(size);
+	std::fill(temp.begin(), temp.end(), 0);
+	arr.assign(input, input + size);
+	mark = new int[size];
+	std::fill(mark, mark + size, 1);
+}
+
+FullArrangement::~FullArrangement()
+{
+
+}
+
+void FullArrangement::recursion1(int index, int* mark)
+{
+	//index1 用来访问原数组里的数字，而index2是加入答案的索引。
+	if (index == size)
+	{
+		ans.push_back(temp);
+	}
+	else
+	{
+		for (int i = 0; i < size; i++)
+		{
+			if (mark[i])
+			{
+				temp[i] = arr[index];
+				mark[i] = 0;
+				recursion1(index + 1, mark);
+				mark[i] = 1;
+			}
+		}
+	}
+}
+
+void FullArrangement::printItself1()
+{
+	recursion1(0, mark);
+	for (const auto it : ans)
+	{
+		for (const int i : it)
+		{
+			std::cout << i << " ";
+		}
+		std::cout << std::endl;
+	}
+}
